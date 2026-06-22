@@ -244,7 +244,7 @@ export default function SolutionPage() {
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 {offlinePaymentSteps.map((step, i) => (
                   <div
-                    key={`${step.label}-${i}`}
+                    key={`${step.label}`}
                     className="flex items-center gap-4"
                   >
                     <div className="flex size-14 items-center justify-center rounded-xl bg-muted/50">
