@@ -7,6 +7,13 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
@@ -138,7 +145,14 @@ export function PricingTabs() {
             onClick={() => setBilling("yearly")}
           >
             Yearly
-            <span className="ml-1.5 text-xs text-primary">Save 10%</span>
+            <span
+              className={cn(
+                "ml-1.5 text-xs",
+                billing !== "yearly" && "text-primary",
+              )}
+            >
+              Save 10%
+            </span>
           </Button>
         </div>
       </div>
@@ -146,66 +160,66 @@ export function PricingTabs() {
       {/* Package cards */}
       <div
         className={cn(
-          "grid gap-6 mx-auto",
-          tab === "photo"
-            ? "sm:grid-cols-2 max-w-2xl"
-            : "sm:grid-cols-3 max-w-4xl",
+          "flex flex-col gap-6 mx-auto sm:flex-row sm:items-stretch",
+          tab === "photo" ? "max-w-2xl" : "max-w-4xl",
         )}
       >
         {packages.map((pkg) => (
-          <div
-            key={pkg.name}
-            className="rounded-xl border border-border bg-card p-8 relative overflow-hidden"
-          >
+          <Card key={pkg.name} className="relative overflow-hidden flex-1">
             <div className="absolute inset-x-0 top-0 h-1 bg-primary" />
-            {pkg.recommended && (
-              <span className="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded mb-3">
-                Recommended
-              </span>
-            )}
-            <h3 className="font-display text-lg font-semibold">{pkg.name}</h3>
-            <div className="mt-3 flex items-baseline gap-1">
-              <span className="text-xs text-muted-foreground">IDR</span>
-              <span className="font-display text-4xl font-bold">
-                {billing === "monthly" ? pkg.priceMonthly : pkg.priceYearly}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {billing === "monthly" ? "/mo" : "/yr"}
-              </span>
-            </div>
-            <ul className="mt-6 space-y-3">
-              {pkg.features.map((feat) => (
-                <li
-                  key={feat}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
-                  <CheckIcon
-                    size={16}
-                    className="mt-0.5 shrink-0 text-primary"
-                  />
-                  {feat}
-                </li>
-              ))}
-            </ul>
-            <Button
-              render={
-                <a
-                  href="https://wa.me/62xxxxxxxxxx"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Buy ${pkg.name} package on WhatsApp`}
-                >
-                  <span className="sr-only">
-                    {`Buy ${pkg.name} package on WhatsApp`}
-                  </span>
-                </a>
-              }
-              variant={pkg.recommended ? "default" : "outline"}
-              className="mt-8 w-full"
-            >
-              Buy Package
-            </Button>
-          </div>
+            <CardHeader>
+              {pkg.recommended && (
+                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded mb-1">
+                  Recommended
+                </span>
+              )}
+              <CardTitle className="font-display text-lg font-semibold">
+                {pkg.name}
+              </CardTitle>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-xs text-muted-foreground">IDR</span>
+                <span className="font-display text-4xl font-bold">
+                  {billing === "monthly" ? pkg.priceMonthly : pkg.priceYearly}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {billing === "monthly" ? "/mo" : "/yr"}
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="flex-1">
+              <ul className="space-y-3">
+                {pkg.features.map((feat) => (
+                  <li
+                    key={feat}
+                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                  >
+                    <CheckIcon
+                      size={16}
+                      className="mt-0.5 shrink-0 text-primary"
+                    />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button
+                render={
+                  <a
+                    href="https://wa.me/62xxxxxxxxxx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Buy ${pkg.name} package on WhatsApp`}
+                  >
+                    Buy Package
+                  </a>
+                }
+                nativeButton={false}
+                variant="default"
+                className="w-full"
+              />
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>

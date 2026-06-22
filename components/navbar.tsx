@@ -1,120 +1,84 @@
 "use client";
 
-import { ListIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { useState } from "react";
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+  MobileNav,
+  MobileNavHeader,
+  MobileNavMenu,
+  MobileNavToggle,
+  NavBody,
+  NavbarButton,
+  NavItems,
+  Navbar as ResizableNavbar,
+} from "@/components/ui/resizable-navbar";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Solution", href: "/solution" },
-  { label: "Contact Us", href: "/contact" },
-  { label: "Hardware & Booth", href: "/device" },
+  { name: "Home", link: "/" },
+  { name: "Pricing", link: "/pricing" },
+  { name: "Solution", link: "/solution" },
+  { name: "Contact Us", link: "/contact" },
+  { name: "Hardware & Booth", link: "/device" },
 ];
 
 export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 bg-secondary text-secondary-foreground border-b border-white/10">
-      <nav className="mx-auto max-w-7xl flex items-center justify-between px-4 py-3 lg:px-8">
-        {/* Logo */}
+    <ResizableNavbar className="top-0">
+      {/* Desktop */}
+      <NavBody>
         <Link
           href="/"
-          className="font-display text-xl font-bold tracking-tight"
+          className="py-1 text-sm font-bold font-display tracking-tight"
         >
           PHOTORA
         </Link>
+        <NavItems items={navLinks} onItemClick={() => setIsOpen(false)} />
+      </NavBody>
 
-        {/* Desktop nav */}
-        <NavigationMenu className="hidden lg:flex">
-          <NavigationMenuList>
-            {navLinks.map((link) => (
-              <NavigationMenuItem key={link.href}>
-                <Link
-                  href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-
-        {/* Desktop actions */}
-        <div className="hidden lg:flex items-center gap-3">
+      {/* Mobile */}
+      <MobileNav>
+        <MobileNavHeader>
           <Link
-            href="/register"
-            className={buttonVariants({ variant: "outline", size: "sm" })}
+            href="/"
+            className="relative z-20 flex items-center space-x-2 px-2 py-1 text-sm font-bold font-display tracking-tight"
           >
-            Register
+            PHOTORA
           </Link>
-          <Link href="/login" className={buttonVariants({ size: "sm" })}>
-            Login
-          </Link>
-        </div>
-
-        {/* Mobile sheet menu */}
-        <Sheet>
-          <SheetTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Open menu"
-                className="lg:hidden"
-              />
-            }
-          >
-            <ListIcon className="size-5" />
-          </SheetTrigger>
-          <SheetContent side="left" showCloseButton={false}>
-            <SheetHeader>
-              <SheetTitle>
-                <Link
-                  href="/"
-                  className="font-display text-lg font-bold tracking-tight"
-                >
-                  PHOTORA
-                </Link>
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-col gap-1 px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block px-3 py-2 text-sm font-medium text-secondary-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <div className="flex flex-col gap-3 px-4 mt-auto pb-4">
-              <Link
-                href="/register"
-                className={buttonVariants({ variant: "outline", size: "sm" })}
-              >
-                Register
-              </Link>
-              <Link href="/login" className={buttonVariants({ size: "sm" })}>
-                Login
-              </Link>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </nav>
-    </header>
+          <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+        </MobileNavHeader>
+        <MobileNavMenu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          {navLinks.map((item) => (
+            <Link
+              key={item.name}
+              href={item.link}
+              onClick={() => setIsOpen(false)}
+              className="relative text-neutral-600 dark:text-neutral-300 px-4 py-2"
+            >
+              {item.name}
+            </Link>
+          ))}
+          <div className="flex w-full flex-col gap-2 mt-4">
+            <NavbarButton
+              as={Link}
+              href="/register"
+              variant="primary"
+              className="w-full text-center"
+            >
+              Register
+            </NavbarButton>
+            <NavbarButton
+              as={Link}
+              href="/login"
+              variant="primary"
+              className="w-full text-center"
+            >
+              Login
+            </NavbarButton>
+          </div>
+        </MobileNavMenu>
+      </MobileNav>
+    </ResizableNavbar>
   );
 }

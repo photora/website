@@ -5,9 +5,11 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FadeInItem, FadeInStagger } from "@/components/motion-primitives";
 import { SearchInput } from "@/components/search-input";
 import { SectionHeading } from "@/components/section-heading";
 import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -114,31 +116,33 @@ export default function BlogPage() {
 
       {/* Blog Grid */}
       <section className="mx-auto w-full max-w-6xl px-4">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
-            <article
-              key={post.title}
-              className="group rounded-xl border border-border bg-card overflow-hidden transition-shadow hover:shadow-lg"
-            >
-              <div className="aspect-video bg-muted flex items-center justify-center">
-                <NewspaperIcon size={32} className="text-muted-foreground/30" />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                  <span>{post.author}</span>
-                  <span className="text-border">|</span>
-                  <span>{post.date}</span>
+            <FadeInItem key={post.title}>
+              <Card className="transition-shadow hover:shadow-lg">
+                <div className="aspect-video bg-muted flex items-center justify-center">
+                  <NewspaperIcon
+                    size={32}
+                    className="text-muted-foreground/30"
+                  />
                 </div>
-                <h3 className="font-display text-base font-semibold leading-snug group-hover:text-primary transition-colors">
-                  {post.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                  {post.excerpt}
-                </p>
-              </div>
-            </article>
+                <CardContent className="flex-1">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                    <span>{post.author}</span>
+                    <span className="text-border">|</span>
+                    <span>{post.date}</span>
+                  </div>
+                  <h3 className="font-display text-base font-semibold leading-snug group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                </CardContent>
+              </Card>
+            </FadeInItem>
           ))}
-        </div>
+        </FadeInStagger>
       </section>
 
       {/* Pagination */}

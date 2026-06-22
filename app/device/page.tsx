@@ -9,7 +9,13 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  FadeIn,
+  FadeInItem,
+  FadeInStagger,
+} from "@/components/motion-primitives";
 import { SectionHeading } from "@/components/section-heading";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Hardware & Booth",
@@ -136,57 +142,65 @@ export default function DevicePage() {
             description="Photora runs on Windows. Here are the minimum and recommended specifications for a smooth photobooth experience."
           />
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          <FadeInStagger className="mt-12 grid gap-6 sm:grid-cols-2">
             {pcSpecs.map((spec) => (
-              <div
-                key={spec.title}
-                className="rounded-xl border border-border bg-card p-6"
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <spec.icon className="size-5" />
+              <FadeInItem key={spec.title}>
+                <Card className="h-full flex flex-col">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <spec.icon className="size-5" />
+                      </div>
+                      <CardTitle className="font-display text-lg font-semibold">
+                        {spec.title}
+                      </CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {spec.items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-sm text-muted-foreground"
+                        >
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+
+          <FadeIn>
+            <Card className="mt-8">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-destructive/10 text-destructive">
+                    <WarningIcon className="size-5" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold">
-                    {spec.title}
-                  </h3>
+                  <CardTitle className="font-display text-lg font-semibold">
+                    Unsupported &amp; Throttling CPUs
+                  </CardTitle>
                 </div>
+              </CardHeader>
+              <CardContent>
                 <ul className="space-y-2">
-                  {spec.items.map((item) => (
+                  {unsupportedNotes.map((note) => (
                     <li
-                      key={item}
+                      key={note}
                       className="flex items-start gap-2 text-sm text-muted-foreground"
                     >
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                      {item}
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive" />
+                      {note}
                     </li>
                   ))}
                 </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Unsupported CPUs WarningIcon */}
-          <div className="mt-8 rounded-xl border border-border bg-card p-6">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-destructive/10 text-destructive">
-                <WarningIcon className="size-5" />
-              </div>
-              <h3 className="font-display text-lg font-semibold">
-                Unsupported &amp; Throttling CPUs
-              </h3>
-            </div>
-            <ul className="space-y-2">
-              {unsupportedNotes.map((note) => (
-                <li
-                  key={note}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive" />
-                  {note}
-                </li>
-              ))}
-            </ul>
-          </div>
+              </CardContent>
+            </Card>
+          </FadeIn>
         </div>
       </section>
 
@@ -199,27 +213,28 @@ export default function DevicePage() {
             description="A good camera makes all the difference. These are the camera lines we recommend for photobooth use."
           />
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <FadeInStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cameras.map((cam) => (
-              <div
-                key={cam.name}
-                className="rounded-xl border border-border bg-card overflow-hidden"
-              >
-                {/* Placeholder image area */}
-                <div className="flex aspect-[4/3] items-center justify-center bg-muted/80">
-                  <CameraIcon className="size-12 text-muted-foreground/50" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-display text-lg font-semibold mb-2">
-                    {cam.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {cam.note}
-                  </p>
-                </div>
-              </div>
+              <FadeInItem key={cam.name}>
+                <Card className="overflow-hidden h-full flex flex-col">
+                  {/* Placeholder image area */}
+                  <div className="flex aspect-[4/3] items-center justify-center bg-muted/80">
+                    <CameraIcon className="size-12 text-muted-foreground/50" />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="font-display text-lg font-semibold">
+                      {cam.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-1">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {cam.note}
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeInItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
@@ -232,27 +247,28 @@ export default function DevicePage() {
             description="These dye-sublimation printers are trusted by photobooth operators worldwide for fast, high-quality prints."
           />
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <FadeInStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {printers.map((p) => (
-              <div
-                key={p.name}
-                className="rounded-xl border border-border bg-card overflow-hidden"
-              >
-                {/* Placeholder image area */}
-                <div className="flex aspect-[4/3] items-center justify-center bg-muted/80">
-                  <PrinterIcon className="size-12 text-muted-foreground/50" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-display text-lg font-semibold mb-2">
-                    {p.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {p.note}
-                  </p>
-                </div>
-              </div>
+              <FadeInItem key={p.name}>
+                <Card className="overflow-hidden h-full flex flex-col">
+                  {/* Placeholder image area */}
+                  <div className="flex aspect-[4/3] items-center justify-center bg-muted/80">
+                    <PrinterIcon className="size-12 text-muted-foreground/50" />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="font-display text-lg font-semibold">
+                      {p.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-1">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {p.note}
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeInItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
     </main>
