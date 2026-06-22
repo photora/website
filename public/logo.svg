@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e61919" />
+      <stop offset="100%" stop-color="#a01111" />
+    </linearGradient>
+
+    <linearGradient id="cloudFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#f0f0f0" />
+    </linearGradient>
+
+    <linearGradient id="stripFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#f4f4f5" />
+    </linearGradient>
+
+    <linearGradient id="picGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e61919" />
+      <stop offset="100%" stop-color="#ffafbd" />
+    </linearGradient>
+    <linearGradient id="picGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#24335c" />
+      <stop offset="100%" stop-color="#a01111" />
+    </linearGradient>
+
+    <linearGradient id="lensOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a0a0a0" />
+      <stop offset="100%" stop-color="#24335c" />
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#FFFFFF" opacity="0.1" />
+    </pattern>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#mainGradient)" />
+  <rect width="512" height="512" rx="112" fill="url(#dots)" />
+
+  <g filter="url(#shadow)">
+    <rect x="196" y="240" width="120" height="200" rx="8" fill="url(#stripFill)" />
+
+    <rect x="208" y="284" width="96" height="64" rx="6" fill="url(#picGrad1)" />
+    <circle cx="256" cy="316" r="16" fill="none" stroke="#FFFFFF" stroke-width="3" />
+    <circle cx="250" cy="312" r="2.5" fill="#FFFFFF" />
+    <circle cx="262" cy="312" r="2.5" fill="#FFFFFF" />
+    <path d="M 248 322 A 8 8 0 0 0 264 322" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+
+    <rect x="208" y="364" width="96" height="64" rx="6" fill="url(#picGrad2)" />
+    <path d="M 256 406 C 256 406 240 394 240 386 C 240 380 245 376 250 376 C 253 376 256 378 256 380 C 256 378 259 376 262 376 C 267 376 272 380 272 386 C 272 394 256 406 256 406 Z" fill="#FFFFFF" />
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="256" cy="190" r="80" fill="url(#cloudFill)" />
+    <circle cx="166" cy="230" r="40" fill="url(#cloudFill)" />
+    <circle cx="346" cy="230" r="40" fill="url(#cloudFill)" />
+    <rect x="166" y="230" width="180" height="40" fill="url(#cloudFill)" />
+
+    <circle cx="256" cy="204" r="48" fill="url(#lensOuter)" />
+    <circle cx="256" cy="204" r="38" fill="#1E293B" />
+    <circle cx="256" cy="204" r="26" fill="#0F172A" />
+
+    <path d="M 236 190 A 24 24 0 0 1 276 190" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.3" />
+    <circle cx="268" cy="216" r="4.5" fill="#FFFFFF" opacity="0.8" />
+
+    <circle cx="308" cy="156" r="12" fill="#ffafbd" />
+    <circle cx="308" cy="156" r="6" fill="#FEF08A" />
+
+    <circle cx="204" cy="156" r="6" fill="#e61919" />
+    <circle cx="204" cy="156" r="2.5" fill="#FECACA" />
+  </g>
+</svg>
